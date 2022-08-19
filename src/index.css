@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Roboto", "Open Sans", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: rgb(255, 255, 255);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(206, 202, 202);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffbc01;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffa700;
+}
+
+.public-DraftEditor-content {
+  overflow: auto;
+  padding: 0px 7px;
+}
