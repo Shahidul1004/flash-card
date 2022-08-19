@@ -1,163 +1,242 @@
-import { Box, Button, IconButton, styled } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  styled,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { BoxProps } from "@mui/system";
-import React from "react";
+import React, { useContext } from "react";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import FastForwardIcon from "@mui/icons-material/FastForward";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import FastRewindIcon from "@mui/icons-material/FastRewind";
+import { Context } from "../Context";
+import EditCard from "./editCard";
+import { cardType } from "../Homepage";
 
 type propTypes = {
+  card: cardType | null;
+  categoryTitle: string;
   numberOfCard: number;
   selectedCardIndex: number;
   changeSelectedCardIndex: React.Dispatch<React.SetStateAction<number>>;
+  showEditCardModal: boolean;
+  changeShowEditCardModal: React.Dispatch<React.SetStateAction<boolean>>;
+  onCloseEditCardModal: () => void;
 };
 const CardController = ({
+  card,
+  categoryTitle,
   numberOfCard,
   selectedCardIndex,
   changeSelectedCardIndex,
+  onCloseEditCardModal,
+  showEditCardModal,
+  changeShowEditCardModal,
 }: propTypes): JSX.Element => {
+  const context = useContext(Context);
+
   let left = Math.max(0, selectedCardIndex - 2);
   let right = Math.min(numberOfCard - 1, left + 4);
   left = Math.max(0, right - 4);
 
   if (numberOfCard === undefined) return <></>;
+
   return (
-    <FooterSection>
-      {numberOfCard > 0 && (
-        <>
-          <Button>Edit this Card</Button>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "6px",
-            }}
-          >
-            <IconButton
+    <>
+      <FooterSection>
+        {numberOfCard > 0 && (
+          <>
+            <Button
               sx={{
-                boxSizing: "border-box",
-                borderRadius: "4px",
-                border: "1px solid #cee9ea",
-                backgroundColor: "#e3ebec",
-                ":hover": {
-                  backgroundColor: "#cee9ea",
-                },
-                cursor: "pointer",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "0px",
+                visibility: context.isLoggedIn && card ? "initial" : "hidden",
               }}
-              disabled={left <= 0}
               onClick={() => {
-                changeSelectedCardIndex(Math.max(left - 3, 0));
+                changeShowEditCardModal(true);
               }}
             >
-              <FastRewindIcon
-                sx={{
-                  width: "35px",
-                  height: "28px",
-                }}
-              />
-            </IconButton>
-            <IconButton
+              Edit this Card
+            </Button>
+            <Box
               sx={{
-                boxSizing: "border-box",
-                borderRadius: "4px",
-                border: "1px solid #cee9ea",
-                backgroundColor: "#e3ebec",
-                ":hover": {
-                  backgroundColor: "#cee9ea",
-                },
-                cursor: "pointer",
                 display: "flex",
+                flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
-                padding: "0px",
+                gap: "6px",
               }}
-              disabled={selectedCardIndex <= 0}
-              onClick={() =>
-                changeSelectedCardIndex(Math.max(selectedCardIndex - 1, 0))
-              }
             >
-              <SkipPreviousIcon
+              <IconButton
                 sx={{
-                  width: "35px",
-                  height: "28px",
+                  boxSizing: "border-box",
+                  borderRadius: "4px",
+                  border: "1px solid #cee9ea",
+                  backgroundColor: "#e3ebec",
+                  ":hover": {
+                    backgroundColor: "#cee9ea",
+                  },
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "0px",
                 }}
-              />
-            </IconButton>
-            {Array.from(Array(right - left + 1).keys()).map((a, index) => (
-              <IndexButton
-                key={index}
-                active={selectedCardIndex === left + index ? 1 : 0}
-                onClick={() => changeSelectedCardIndex(left + index)}
+                disabled={left <= 0}
+                onClick={() => {
+                  changeSelectedCardIndex(Math.max(left - 3, 0));
+                }}
               >
-                {left + index + 1}
-              </IndexButton>
-            ))}
-            <IconButton
+                <FastRewindIcon
+                  sx={{
+                    width: "35px",
+                    height: "28px",
+                  }}
+                />
+              </IconButton>
+              <IconButton
+                sx={{
+                  boxSizing: "border-box",
+                  borderRadius: "4px",
+                  border: "1px solid #cee9ea",
+                  backgroundColor: "#e3ebec",
+                  ":hover": {
+                    backgroundColor: "#cee9ea",
+                  },
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "0px",
+                }}
+                disabled={selectedCardIndex <= 0}
+                onClick={() =>
+                  changeSelectedCardIndex(Math.max(selectedCardIndex - 1, 0))
+                }
+              >
+                <SkipPreviousIcon
+                  sx={{
+                    width: "35px",
+                    height: "28px",
+                  }}
+                />
+              </IconButton>
+              {Array.from(Array(right - left + 1).keys()).map((a, index) => (
+                <IndexButton
+                  key={index}
+                  active={selectedCardIndex === left + index ? 1 : 0}
+                  onClick={() => changeSelectedCardIndex(left + index)}
+                >
+                  {left + index + 1}
+                </IndexButton>
+              ))}
+              <IconButton
+                sx={{
+                  boxSizing: "border-box",
+                  borderRadius: "4px",
+                  border: "1px solid #cee9ea",
+                  backgroundColor: "#e3ebec",
+                  ":hover": {
+                    backgroundColor: "#cee9ea",
+                  },
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "0px",
+                }}
+                disabled={selectedCardIndex >= numberOfCard - 1}
+                onClick={() =>
+                  changeSelectedCardIndex(
+                    Math.min(selectedCardIndex + 1, numberOfCard - 1)
+                  )
+                }
+              >
+                <SkipNextIcon
+                  sx={{
+                    width: "35px",
+                    height: "28px",
+                  }}
+                />
+              </IconButton>
+              <IconButton
+                sx={{
+                  boxSizing: "border-box",
+                  borderRadius: "4px",
+                  border: "1px solid #cee9ea",
+                  backgroundColor: "#e3ebec",
+                  ":hover": {
+                    backgroundColor: "#cee9ea",
+                  },
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "0px",
+                }}
+                disabled={right >= numberOfCard - 1}
+                onClick={() =>
+                  changeSelectedCardIndex(Math.min(right + 3, numberOfCard - 1))
+                }
+              >
+                <FastForwardIcon
+                  sx={{
+                    width: "35px",
+                    height: "28px",
+                  }}
+                />
+              </IconButton>
+            </Box>
+            <Box
               sx={{
-                boxSizing: "border-box",
-                borderRadius: "4px",
-                border: "1px solid #cee9ea",
-                backgroundColor: "#e3ebec",
-                ":hover": {
-                  backgroundColor: "#cee9ea",
-                },
-                cursor: "pointer",
                 display: "flex",
+                flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
-                padding: "0px",
+                gap: "6px",
               }}
-              disabled={selectedCardIndex >= numberOfCard - 1}
-              onClick={() =>
-                changeSelectedCardIndex(
-                  Math.min(selectedCardIndex + 1, numberOfCard - 1)
-                )
-              }
             >
-              <SkipNextIcon
+              <Typography>Page</Typography>
+              <TextField
+                type="number"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      of {numberOfCard}
+                    </InputAdornment>
+                  ),
+                }}
+                value={selectedCardIndex + 1}
+                onChange={(e) => {
+                  const value = +e.target.value;
+                  if (value > 0 && value <= numberOfCard)
+                    changeSelectedCardIndex(value - 1);
+                }}
                 sx={{
-                  width: "35px",
-                  height: "28px",
+                  "& .MuiOutlinedInput-root": {
+                    paddingRight: "5px",
+                  },
+                  "& .MuiOutlinedInput-input": {
+                    padding: "5px 10px",
+                    width: "50px",
+                    ":hover": {},
+                  },
                 }}
               />
-            </IconButton>
-            <IconButton
-              sx={{
-                boxSizing: "border-box",
-                borderRadius: "4px",
-                border: "1px solid #cee9ea",
-                backgroundColor: "#e3ebec",
-                ":hover": {
-                  backgroundColor: "#cee9ea",
-                },
-                cursor: "pointer",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "0px",
-              }}
-              disabled={right >= numberOfCard - 1}
-              onClick={() =>
-                changeSelectedCardIndex(Math.min(right + 3, numberOfCard - 1))
-              }
-            >
-              <FastForwardIcon
-                sx={{
-                  width: "35px",
-                  height: "28px",
-                }}
-              />
-            </IconButton>
-          </Box>
-        </>
+            </Box>
+          </>
+        )}
+      </FooterSection>
+      {showEditCardModal && card && (
+        <EditCard
+          card={card}
+          categoryTitle={categoryTitle}
+          onClose={onCloseEditCardModal}
+        />
       )}
-    </FooterSection>
+    </>
   );
 };
 export default CardController;

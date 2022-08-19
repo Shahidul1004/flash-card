@@ -38,6 +38,15 @@ const ManageSection = (): JSX.Element => {
   const [showCreateCardModal, setShowCreateCardModal] =
     useState<boolean>(false);
 
+  if (
+    !(
+      showCreateCategoryModal ||
+      showDeleteCategoryModal ||
+      showCreateCardModal ||
+      showDeleteCardModal
+    )
+  )
+    context.setLoading(isLoading);
   const modalCategory = useRef<categoryType | null>(null);
   const modalCard = useRef<cardType | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

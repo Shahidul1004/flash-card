@@ -41,3 +41,9 @@ code {
   overflow: auto;
   padding: 0px 7px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

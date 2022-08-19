@@ -26,12 +26,14 @@ export type cardType = {
 
 const Homepage = (): JSX.Element => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [showEditCardModal, setShowEditCardModal] = useState<boolean>(false);
   const context = useContext(Context);
-  context.setLoading(isLoading);
+  if (!showEditCardModal) context.setLoading(isLoading);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number>(-1);
   const [selectedCardIndex, setSelectedCardIndex] = useState<number>(0);
   const [categories, setCategories] = useState<categoryType[]>([]);
   const [card, setCard] = useState<cardType | null>(null);
+  const [fetchCard, setFetchCard] = useState<boolean>(false);
 
   useEffect(() => {
     const getCategory = async () => {
@@ -105,7 +107,7 @@ const Homepage = (): JSX.Element => {
             selectedCardIndex
           ]
     );
-  }, [selectedCardIndex, selectedCategoryId, categories]);
+  }, [selectedCardIndex, selectedCategoryId, categories, fetchCard]);
 
   return (
     <HomepageStyle>
@@ -119,6 +121,10 @@ const Homepage = (): JSX.Element => {
       />
       <CardViewer card={card} />
       <CardController
+        card={card}
+        categoryTitle={
+          categories.find((cat) => cat.id === selectedCategoryId)?.title!
+        }
         numberOfCard={
           selectedCategoryId !== -1
             ? categories.find((cat) => cat.id === selectedCategoryId)?.cardList
@@ -127,6 +133,14 @@ const Homepage = (): JSX.Element => {
         }
         selectedCardIndex={selectedCardIndex}
         changeSelectedCardIndex={setSelectedCardIndex}
+        showEditCardModal={showEditCardModal}
+        changeShowEditCardModal={setShowEditCardModal}
+        onCloseEditCardModal={() => {
+          setTimeout(() => {
+            setShowEditCardModal(false);
+            setFetchCard((prev) => !prev);
+          }, 50);
+        }}
       />
     </HomepageStyle>
   );
