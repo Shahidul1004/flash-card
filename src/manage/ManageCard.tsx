@@ -345,6 +345,11 @@ const ManageCard = ({
                   boxSizing: "border-box",
                   overflow: "hidden",
                 }}
+                toolbar={{
+                  fontFamily: {
+                    options: ["Roboto", "Source Code Pro"],
+                  },
+                }}
               />
             </Box>
             <Box
@@ -374,6 +379,11 @@ const ManageCard = ({
                   border: "1px solid #ccc",
                   boxSizing: "border-box",
                   overflow: "hidden",
+                }}
+                toolbar={{
+                  fontFamily: {
+                    options: ["Roboto", "Source Code Pro"],
+                  },
                 }}
               />
             </Box>

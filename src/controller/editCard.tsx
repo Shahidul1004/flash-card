@@ -223,6 +223,11 @@ const EditCard = ({ card, categoryTitle, onClose }: props): JSX.Element => {
                   boxSizing: "border-box",
                   overflow: "hidden",
                 }}
+                toolbar={{
+                  fontFamily: {
+                    options: ["Roboto", "Source Code Pro"],
+                  },
+                }}
               />
             </Box>
             <Box
@@ -252,6 +257,11 @@ const EditCard = ({ card, categoryTitle, onClose }: props): JSX.Element => {
                   border: "1px solid #ccc",
                   boxSizing: "border-box",
                   overflow: "hidden",
+                }}
+                toolbar={{
+                  fontFamily: {
+                    options: ["Roboto", "Source Code Pro"],
+                  },
                 }}
               />
             </Box>

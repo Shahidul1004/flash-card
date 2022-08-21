@@ -1,9 +1,4 @@
-import {
-  Box,
-  styled,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, styled, Typography, useMediaQuery } from "@mui/material";
 import { cardType } from "../Homepage";
 import { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
@@ -72,6 +67,11 @@ const CardViewer = ({ card }: propsType): JSX.Element => {
                     }`,
                     overflow: "hidden",
                   }}
+                  toolbar={{
+                    fontFamily: {
+                      options: ["Roboto", "Source Code Pro"],
+                    },
+                  }}
                 />
               </Box>
               <Box
@@ -109,6 +109,11 @@ const CardViewer = ({ card }: propsType): JSX.Element => {
                       smallDevice ? "calc(50vw - 185px)" : "calc(100vw - 350px)"
                     }`,
                     overflow: "hidden",
+                  }}
+                  toolbar={{
+                    fontFamily: {
+                      options: ["Roboto", "Source Code Pro"],
+                    },
                   }}
                 />
               </Box>
