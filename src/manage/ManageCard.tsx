@@ -51,6 +51,7 @@ const ManageCard = ({
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
